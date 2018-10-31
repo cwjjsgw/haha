@@ -113,11 +113,12 @@ def train():
           save_path = saver.save(sess, checkpoints_dir + "/model.ckpt", global_step=step)
           logging.info("Model saved in file: %s" % save_path)
 
-        step += 1
+        
         
         if step==100000:
            coord.request_stop()
-           
+        step += 1   
+        print(step)
 
     except KeyboardInterrupt:
       logging.info('Interrupted')
