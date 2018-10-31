@@ -102,18 +102,22 @@ def train():
         train_writer.add_summary(summary, step)
         train_writer.flush()
 
-        if step % 10 == 0:
+        if step % 500 == 0:
           logging.info('-----------Step %d:-------------' % step)
           logging.info('  G_loss   : {}'.format(G_loss_val))
           logging.info('  D_Y_loss : {}'.format(D_Y_loss_val))
           logging.info('  F_loss   : {}'.format(F_loss_val))
           logging.info('  D_X_loss : {}'.format(D_X_loss_val))
 
-        if step % 100 == 0:
+        if step % 10000 == 0:
           save_path = saver.save(sess, checkpoints_dir + "/model.ckpt", global_step=step)
           logging.info("Model saved in file: %s" % save_path)
 
         step += 1
+        
+        if step==100000:
+           coord.request_stop()
+           
 
     except KeyboardInterrupt:
       logging.info('Interrupted')
